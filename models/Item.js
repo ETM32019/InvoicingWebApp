@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const ItemSchema = new mongoose.Schema({
+  user: {
+    type: Schema.Types.ObjectId
+  },
   description: {
     type: String
   },

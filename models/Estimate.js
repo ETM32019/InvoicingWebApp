@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const InvoiceSchema = new mongoose.Schema({
-  invoice: {
+const EstimateSchema = new mongoose.Schema({
+  estimate: {
     user: {
         type: Schema.Types.ObjectId
       },
@@ -62,4 +62,4 @@ const InvoiceSchema = new mongoose.Schema({
   }
 });
 
-module.exports = Invoice = mongoose.model("invoice", InvoiceSchema);
+module.exports = Estimate = mongoose.model("estimate", Estimate);

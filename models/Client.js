@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const ClientSchema = new mongoose.Schema({
+  user: {
+    type: Schema.Types.ObjectId
+  },
   name: {
     type: String
   },

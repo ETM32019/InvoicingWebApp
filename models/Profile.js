@@ -10,7 +10,9 @@ const ProfileSchema = new mongoose.Schema({
       type: String
     },
     email: {
-      type: String
+      type: String,
+      required: true,
+      unique: true
     },
     address1: {
       type: String
@@ -42,12 +44,12 @@ const ProfileSchema = new mongoose.Schema({
       contentType: String
     },
     color: {
-      type: [String]
+      type: String
     }
   },
   tax: {
     type: {
-      type: [String]
+      type: String
     },
     rate: {
       type: mongoose.Types.Decimal128
@@ -62,7 +64,7 @@ const ProfileSchema = new mongoose.Schema({
   },
   currency: {
     code: {
-      type: [String]
+      type: String
     }
   },
   estimate: {
