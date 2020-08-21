@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const config = require("config");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const User = require("../../models/User");
 
@@ -50,7 +52,7 @@ router.post(
         });
       }
 
-      // Create instance of User
+      // Create new instance of User
       user = new User({
         firstname,
         lastname,
@@ -67,13 +69,29 @@ router.post(
       await user.save();
 
       // Return jsonwebtoken
-      //   const payload = {
-      //     user: {
-      //       id: user.id
-      //     }
-      //   };
+      // send the user id as the payload to identify which user has the token
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
 
-      res.send("User Registered");
+      // fist sign jwt with the user id for the token
+      jwt.sign(
+        payload,
+        // bring in the jwt secret string from the middleware
+        config.get("jwtSecret"),
+        // optional: expire token in x amount of time
+        // TODO: set expire time back to 1 hr
+        { expiresIn: "600h" },
+        // put a callback
+        (err, token) => {
+          // if error throw it
+          if (err) throw err;
+          // if not return the token
+          res.json({ token });
+        }
+      );
     } catch (error) {
       console.error(error.message);
       req.status(500).send("Server error");

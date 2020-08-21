@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://landonM:Samoa4life!@invoicingwebapp.cimpn.mongodb.net/landonM?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://landonM:Samoa4life!@invoicingwebapp.cimpn.mongodb.net/landonM?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken"
 }
