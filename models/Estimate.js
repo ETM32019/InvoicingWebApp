@@ -3,31 +3,8 @@ const mongoose = require("mongoose");
 const EstimateSchema = new mongoose.Schema({
   estimate: {
     user: {
-        type: Schema.Types.ObjectId
-      },
-    from: {
-      profile: {
-        type: Schema.Types.ObjectId,
-        ref: "profile"
-      }
+      type: Schema.Types.ObjectId
     },
-    billto: {
-      client: {
-        type: Schema.Types.ObjectId,
-        ref: "client"
-      }
-    },
-    item: [
-      {
-        user: {
-          type: Schema.Types.ObjectId
-        },
-        item: {
-          type: Schema.Types.ObjectId,
-          ref: "item"
-        }
-      }
-    ],
     notes: {
       type: String
     },
