@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
+const { check, validationResult } = require("express-validator");
 
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
@@ -131,9 +132,9 @@ router.delete("/", auth, async (req, res) => {
   try {
     // TODO: Remove Invoices, Estimates, Clients, Items?
     // remove the profile
-    await Profile.findByIdAndDelete({ user: req.user.id });
+    await Profile.findOneAndDelete({ user: req.user.id });
     // remove the user
-    await User.findByIdAndDelete({ _id: req.user.id });
+    await User.findOneAndDelete({ _id: req.user.id });
 
     res.json({ msg: "User Deleted" });
   } catch (err) {
