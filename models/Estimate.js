@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const EstimateSchema = new mongoose.Schema({
+const EstimateSchema = new Schema({
   estimate: {
     user: {
       type: Schema.Types.ObjectId

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const ItemSchema = new mongoose.Schema({
+const ItemSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId
   },
@@ -16,6 +17,10 @@ const ItemSchema = new mongoose.Schema({
   taxable: {
     type: Boolean,
     default: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 
