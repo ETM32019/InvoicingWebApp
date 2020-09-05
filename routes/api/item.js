@@ -2,11 +2,10 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 
-const User = require("../../models/User");
 const Item = require("../../models/Item");
 
 // @route   POST api/items
-// @desc    Create an Item
+// @desc    Create or update an Item
 // @access  Private
 router.post("/", auth, async (req, res) => {
   try {
@@ -15,11 +14,10 @@ router.post("/", auth, async (req, res) => {
       description: req.body.description,
       rate: req.body.rate,
       additionaldetails: req.body.additionaldetails,
-      taxable: req.body.taxable,
-      user: req.user.id
+      taxable: req.body.taxable
     });
 
-    // save item
+    // save new item object
     const item = await newItem.save();
 
     // display it
