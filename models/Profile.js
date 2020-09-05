@@ -5,92 +5,79 @@ const ProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user"
   },
-  company: {
-    title: {
-      type: String
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    address1: {
-      type: String
-    },
-    address2: {
-      type: String
-    },
-    address3: {
-      type: String
-    },
-    phone: {
-      type: String,
-      validate: {
-        validator: function(v) {
-          return /\d{3}-\d{3}-\d{4}/.test(v);
-        },
-        message: props => `${props.value} is not a valid phone number!`
+  title: {
+    type: String
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  address1: {
+    type: String
+  },
+  address2: {
+    type: String
+  },
+  address3: {
+    type: String
+  },
+  phone: {
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /\d{3}-\d{3}-\d{4}/.test(v);
       },
-      required: [true, "User phone number required"]
+      message: props => `${props.value} is not a valid phone number!`
     },
-    businessnumber: {
-      type: Number
-    },
-    businessnumberlabel: {
-      type: String
-    },
-    companylogo: {
-      data: Buffer,
-      contentType: String
-    },
-    color: {
-      type: String
-    }
+    required: [true, "User phone number required"]
   },
-  tax: {
-    type: {
-      type: String
-    },
-    rate: {
-      type: mongoose.Types.Decimal128
-    },
-    label: {
-      type: String
-    },
-    inclusive: {
-      type: Boolean,
-      default: false
-    }
+  businessnumber: {
+    type: Number
   },
-  currency: {
-    code: {
-      type: String
-    }
+  businessnumberlabel: {
+    type: String
   },
-  estimate: {
-    title: {
-      type: String
-    },
-    lastnumber: {
-      type: String
-    },
-    defaultnotes: {
-      type: String
-    }
+  companylogo: {
+    data: Buffer,
+    contentType: String
   },
-  paymentinfo: {
-    paypal: {
-      type: String
-    },
-    backtransfer: {
-      type: String
-    },
-    bycheck: {
-      type: String
-    },
-    other: {
-      type: String
-    }
+  color: {
+    type: String
+  },
+  type: {
+    type: String
+  },
+  rate: {
+    type: mongoose.Types.Decimal128
+  },
+  label: {
+    type: String
+  },
+  inclusive: {
+    type: Boolean,
+    default: false
+  },
+  code: {
+    type: String
+  },
+  lastnumber: {
+    type: String
+  },
+  defaultnotes: {
+    type: String
+  },
+  paypal: {
+    type: String
+  },
+  backtransfer: {
+    type: String
+  },
+  bycheck: {
+    type: String
+  },
+  other: {
+    type: String
   }
 });
 
