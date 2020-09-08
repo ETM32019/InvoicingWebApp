@@ -51,6 +51,7 @@ router.post(
       estimatetophone
     } = req.body;
 
+    // Create the Estimate Object
     const estimateFields = {
       user: req.user.id,
       title,
@@ -71,10 +72,11 @@ router.post(
     };
 
     try {
+        // Find the Estimate via user id
       let estimate = await Estimate.findOne({ user: req.user.id });
-
+        // Make a new Estimate Object with the Estimate Object we built
       estimate = new Estimate(estimateFields);
-
+        // Save the Estimate Object
       await estimate.save();
       res.json(estimate);
     } catch (err) {
