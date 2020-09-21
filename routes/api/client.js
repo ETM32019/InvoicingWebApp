@@ -20,10 +20,43 @@ router.post("/", auth, async (req, res) => {
     });
 
     // save new client object
-    const client = await newClient.save()
+    const client = await newClient.save();
 
     // display json
     res.json(client);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/clients/:id
+// @desc    Edit Client by ID
+// @access  Private
+router.put("/:id", auth, async (req, res) => {
+  try {
+    // find client by id and update
+    let client = await Client.findOneAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name || "No Name Given",
+        email: req.body.email || "No Email Given",
+        street: req.body.street || "No Street Given",
+        city: req.body.city || "No City Given",
+        country: req.body.country || "No Country Given",
+        phone: req.body.phone
+      },
+      {
+        new: true
+      }
+    );
+    // error check for client
+    if (!client) {
+      return res.status(404).json({ msg: "Client does not exist." });
+    }
+    // send new client to client
+    res.send(client);
+    res.json({ msg: "Client Updated" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

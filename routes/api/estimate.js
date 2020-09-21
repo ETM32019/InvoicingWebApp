@@ -72,11 +72,11 @@ router.post(
     };
 
     try {
-        // Find the Estimate via user id
+      // Find the Estimate via user id
       let estimate = await Estimate.findOne({ user: req.user.id });
-        // Make a new Estimate Object with the Estimate Object we built
+      // Make a new Estimate Object with the Estimate Object we built
       estimate = new Estimate(estimateFields);
-        // Save the Estimate Object
+      // Save the Estimate Object
       await estimate.save();
       res.json(estimate);
     } catch (err) {
@@ -85,6 +85,44 @@ router.post(
     }
   }
 );
+
+// @route   PUT api/estimates/:id
+// @desc    Edit estimate by id
+// @access  Private
+router.put("/:id", auth, async (req, res) => {
+  try {
+    // Find estimate by ID and update it
+    let estimate = await Estimate.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title || "No Title Given",
+        notes: req.body.notes || "No Notes Added",
+        previewemail: req.body.previewemail || "No Email Provided",
+        color: req.body.color || "No Color Selected",
+        name: req.body.name || "No Name Provided",
+        email: req.body.email || "No Email Provided",
+        address: req.body.address || "No Address Given",
+        phone: req.body.phone || "No Number Provided",
+        businessnumber: req.body.businessnumber || "No Business Provided",
+        estimatedate: req.body.estimatedate,
+        estimatetoname: req.body.estimatetoname || "No name given",
+        estimatetoemail: req.body.estimatetoemail || "No email provided",
+        estimatetoaddress: req.body.estimatetoaddress || "No address given",
+        estimatetophone: req.body.estimatetophone || "No phone number"
+      },
+      { new: true }
+    );
+    // error check for the estimate
+    if (!estimate) {
+      return res.status(404).json({ msg: "Estimate does not exist" });
+    }
+    res.send(estimate);
+    res.json({ msg: "Estimated Updated" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 // @route   GET api/estimates
 // @desc    Get all invoices

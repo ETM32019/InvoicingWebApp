@@ -42,7 +42,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// @route   Get api/items/:id
+// @route   GET api/items/:id
 // @desc    Get item by id
 // @access  Private
 router.get("/:id", auth, async (req, res) => {
@@ -57,6 +57,35 @@ router.get("/:id", auth, async (req, res) => {
 
     // return the item
     res.json(item);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/items/:id
+// @desc    Update item by id
+// @access  Private
+router.put("/:id", auth, async (req, res) => {
+  try {
+    // find item by id and update; error check for item
+    let item = await Item.findByIdAndUpdate(
+      req.params.id,
+      {
+        description: req.body.description || "Untitled Item",
+        rate: req.body.rate || 0.0,
+        additionaldetails: req.body.additionaldetails || "No Notes Added",
+        taxable: req.body.taxable || false
+      },
+      { new: true }
+    ).then(item => {
+      if (!item) {
+        return res.status(404).json({ msg: "Item does not exists" });
+      }
+    });
+
+    res.send(item);
+    res.json({msg: "Item Updated"})
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
