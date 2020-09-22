@@ -11,12 +11,15 @@ router.post("/", auth, async (req, res) => {
   try {
     // create new client object
     const newClient = new Client({
-      name: req.body.name,
-      email: req.body.email,
-      street: req.body.street,
-      city: req.body.city,
-      country: req.body.country,
-      phone: req.body.phone
+      user: req.user.id,
+      name: req.body.name || "No Name Given",
+      email: req.body.email || "No Email Given",
+      phone: req.body.phone || "No Phone Given",
+      address: {
+        street: req.body.address.street || "No Street Given",
+        city: req.body.address.city || "No City Given",
+        country: req.body.address.country || "No Country Given"
+      }
     });
 
     // save new client object
@@ -39,16 +42,17 @@ router.put("/:id", auth, async (req, res) => {
     let client = await Client.findOneAndUpdate(
       req.params.id,
       {
+        user: req.user.id,
         name: req.body.name || "No Name Given",
         email: req.body.email || "No Email Given",
-        street: req.body.street || "No Street Given",
-        city: req.body.city || "No City Given",
-        country: req.body.country || "No Country Given",
-        phone: req.body.phone
+        phone: req.body.phone || "No Phone Given",
+        address: {
+          street: req.body.address.street || "No Street Given",
+          city: req.body.address.city || "No City Given",
+          country: req.body.address.country || "No Country Given"
+        }
       },
-      {
-        new: true
-      }
+      { new: true }
     );
     // error check for client
     if (!client) {
